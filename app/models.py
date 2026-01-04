@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from app.database import Base
 
 class WorkoutTemplate(Base):
-    __tablename__ = "workouts"
+    __tablename__ = "workout_templates"
     
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False, index=True)

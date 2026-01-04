@@ -59,30 +59,68 @@ def delete_workout_template(workout_template_id: int, db: Session = Depends(get_
         raise HTTPException(status_code=404, detail="Workout template not found")
     return None
 
+# Exercise Template Endpoints
+@app.post("/workout-templates/{workout_template_id}/exercise-templates/", response_model=schemas.ExerciseTemplateResponse, status_code=status.HTTP_201_CREATED)
+def create_exercise_template(
+    workout_template_id: int,
+    exercise_template: schemas.ExerciseTemplateCreate,
+    db: Session = Depends(get_db)
+):
+    """Create a new exercise template within a workout template"""
+    return crud.create_exercise_template(db=db, workout_template_id=workout_template_id, exercise_template=exercise_template)
+
+@app.get("/workout-templates/{workout_template_id}/exercise-templates/", response_model=List[schemas.ExerciseTemplateResponse])
+def read_exercise_templates(workout_template_id: int, db: Session = Depends(get_db)):
+    """Get all exercise templates for a workout template"""
+    return crud.get_exercise_templates_by_workout_template(db=db, workout_template_id=workout_template_id)
+
+@app.get("/exercise-templates/{exercise_template_id}", response_model=schemas.ExerciseTemplateResponse)
+def read_exercise_template(exercise_template_id: int, db: Session = Depends(get_db)):
+    """Get a specific exercise template by ID"""
+    db_exercise_template = crud.get_exercise_template(db=db, exercise_template_id=exercise_template_id)
+    if db_exercise_template is None:
+        raise HTTPException(status_code=404, detail="Exercise template not found")
+    return db_exercise_template
+
+@app.put("/exercise-templates/{exercise_template_id}", response_model=schemas.ExerciseTemplateResponse)
+def update_exercise_template(exercise_template_id: int, exercise_template: schemas.ExerciseTemplateUpdate, db: Session = Depends(get_db)):
+    """Update an exercise template"""
+    db_exercise_template = crud.update_exercise_template(db=db, exercise_template_id=exercise_template_id, exercise_template=exercise_template)
+    if db_exercise_template is None:
+        raise HTTPException(status_code=404, detail="Exercise template not found")
+    return db_exercise_template
+
+@app.delete("/exercise-templates/{exercise_template_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_exercise_template(exercise_template_id: int, db: Session = Depends(get_db)):
+    """Delete an exercise template"""
+    db_exercise_template = crud.delete_exercise_template(db=db, exercise_template_id=exercise_template_id)
+    if db_exercise_template is None:
+        raise HTTPException(status_code=404, detail="Exercise template not found")
+    return None
 
 # Exercise Endpoints
-@app.post("/workout-templates/{workout_template_id}/exercises/", response_model=schemas.ExerciseResponse, status_code=status.HTTP_201_CREATED)
+@app.post("/workout/{workout_id}/exercises/", response_model=schemas.ExerciseResponse, status_code=status.HTTP_201_CREATED)
 def create_exercise(
-    workout_template_id: int,
+    workout_id: int,
     exercise: schemas.ExerciseCreate,
     db: Session = Depends(get_db)
 ):
-    """Create a new exercise within a workout template"""
+    """Create a new exercise within a workout"""
     # Verify workout template exists
-    workout_template = crud.get_workout_template(db=db, workout_template_id=workout_template_id)
-    if workout_template is None:
-        raise HTTPException(status_code=404, detail="Workout template not found")
-    return crud.create_exercise(db=db, workout_template_id=workout_template_id, exercise=exercise)
+    workout = crud.get_workout(db=db, workout_id=workout_id)
+    if workout is None:
+        raise HTTPException(status_code=404, detail="Workout  not found")
+    return crud.create_exercise(db=db, workout_id=workout_id, exercise=exercise)
 
 
-@app.get("/workout-templates/{workout_template_id}/exercises/", response_model=List[schemas.ExerciseResponse])
-def read_exercises(workout_template_id: int, db: Session = Depends(get_db)):
-    """Get all exercises for a workout template"""
+@app.get("/workout/{workout_id}/exercises/", response_model=List[schemas.ExerciseResponse])
+def read_exercises(workout_id: int, db: Session = Depends(get_db)):
+    """Get all exercises for a workout"""
     # Verify workout template exists
-    workout_template = crud.get_workout_template(db=db, workout_template_id=workout_template_id)
-    if workout_template is None:
-        raise HTTPException(status_code=404, detail="Workout template not found")
-    return crud.get_exercises_by_workout_template(db=db, workout_template_id=workout_template_id)
+    workout = crud.get_workout(db=db, workout_id=workout_id)
+    if workout is None:
+        raise HTTPException(status_code=404, detail="Workout not found")
+    return crud.get_exercises_by_workout(db=db, workout_id=workout_id)
 
 
 @app.get("/exercises/{exercise_id}", response_model=schemas.ExerciseResponse)
