@@ -6,8 +6,12 @@ from app.schemas import *
 # CONSTANTS (Change as needed)
 # -------------------------------------------------------------------
 UPDATE_MODEL = [
-    WorkoutUpdate, SetUpdate, ExerciseUpdate, UserUpdate, 
-    WorkoutTemplateUpdate, ExerciseTemplateUpdate
+    WorkoutUpdate,
+    SetUpdate,
+    ExerciseUpdate,
+    UserUpdate,
+    WorkoutTemplateUpdate,
+    ExerciseTemplateUpdate,
 ]
 
 VALID_UPDATE_MODEL_TO_FIELD = {
@@ -16,8 +20,9 @@ VALID_UPDATE_MODEL_TO_FIELD = {
     ExerciseUpdate: {"name": "Bench Press"},
     UserUpdate: {"name": "New Name"},
     WorkoutTemplateUpdate: {"name": "New template"},
-    ExerciseTemplateUpdate: {"name": "New template"}
+    ExerciseTemplateUpdate: {"name": "New template"},
 }
+
 
 @pytest.mark.parametrize("models", UPDATE_MODEL)
 def test_update_error_no_field(model):
@@ -26,16 +31,15 @@ def test_update_error_no_field(model):
         model(**empty_field)
     assert "At least one value must be updated" in str(excinfo.value)
 
+
 @pytest.mark.parametrize(
-    "model, field", 
-    [ (k, v) for k, v in VALID_UPDATE_MODEL_TO_FIELD.items()]
+    "model, field", [(k, v) for k, v in VALID_UPDATE_MODEL_TO_FIELD.items()]
 )
 def test_update_pass_one_field(model, field):
     try:
         instance = model(**field)
     except Exception as e:
         pytest.fail(f"Test failed for {model}: {e}")
-    
+
     assert instance is not None, "Class not created"
     assert len(instance.model_dump(exclude_none=True)) == 1, "Model's field != 1"
-    
