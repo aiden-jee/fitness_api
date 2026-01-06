@@ -60,7 +60,20 @@ jobs:
         tags: ${{ env.IMAGE_NAME }}:${{ github.head_ref || github.ref_name }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+    
+    # -----------------------------------------------------
+    # Run Docker Image in Container (RUNS PYTEST UNIT TESTS)
+    # -----------------------------------------------------
+    - name: Run Pytest within the Docker Container
+      run: |
+        IMAGE_TAG="${{ env.IMAGE_NAME }}:${{ github.head_ref || github.ref_name }}"
 
+        docker run --rm -t $IMAGE_TAG \
+          pytest tests/unit \
+          --cov=./app \
+          --cov-report=xml:coverage.xml \
+          --junitxml=pytest-report.xml
+          
 
 
       

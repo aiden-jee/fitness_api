@@ -19,15 +19,17 @@ VALID_UPDATE_MODEL_TO_FIELD = {
     ExerciseTemplateUpdate: {"name": "New template"}
 }
 
-@pytest.mark.parametrize(
-
-)
+@pytest.mark.parametrize("models", UPDATE_MODEL)
 def test_update_error_no_field(model):
     empty_field = {}
     with pytest.raises(ValueError) as excinfo:
         model(**empty_field)
     assert "At least one value must be updated" in str(excinfo.value)
 
+@pytest.mark.parametrize(
+    "model, field", 
+    [ (k, v) for k, v in VALID_UPDATE_MODEL_TO_FIELD.items()]
+)
 def test_update_pass_one_field(model, field):
     try:
         instance = model(**field)
