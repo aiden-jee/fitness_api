@@ -4,7 +4,7 @@ from typing import List, Optional
 
 
 # TODO: Export to a seperate models folder when refactoring
-def validate_any_field(cls, self):
+def validate_any_field(self):
     """Reusable logic for Pydantic model_validators"""
     if not self.model_dump(exclude_none=True):
         raise ValueError("At least one field must be updated")
