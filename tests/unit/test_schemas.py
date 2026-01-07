@@ -31,6 +31,9 @@ VALID_UPDATE_MODEL_TO_FIELD = {
 }
 
 
+# -------------------------------------------------------------------
+# Unit tests
+# -------------------------------------------------------------------
 @pytest.mark.parametrize("model", UPDATE_MODEL)
 def test_update_error_no_field(model):
     empty_field = {}

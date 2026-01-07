@@ -2,6 +2,7 @@ from pydantic import Field, BaseModel, model_validator
 from datetime import datetime
 from typing import List, Optional
 
+
 # TODO: Export to a seperate models folder when refactoring
 def validate_any_field(cls, self):
     """Reusable logic for Pydantic model_validators"""
@@ -99,7 +100,6 @@ class WorkoutUpdate(BaseModel):
     )
 
     _validate = model_validator(mode="after")(validate_any_field)
-
 
 
 # ============================================================================
