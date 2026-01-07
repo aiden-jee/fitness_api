@@ -2,6 +2,13 @@ from pydantic import Field, BaseModel, model_validator
 from datetime import datetime
 from typing import List, Optional
 
+# TODO: Export to a seperate models folder when refactoring
+def validate_any_field(cls, self):
+    """Reusable logic for Pydantic model_validators"""
+    if not self.model_dump(exclude_none=True):
+        raise ValueError("At least one field must be updated")
+    return self
+
 
 # ============================================================================
 # Set Schemas (Sets in Exercises - Has Reps and Weight)
@@ -31,11 +38,7 @@ class SetUpdate(BaseModel):
         None, ge=0, description="The weight of each rep to update"
     )
 
-    @model_validator(mode="after")
-    def validate_at_least_one_field(self):
-        if self.reps is None and self.weight is None:
-            raise ValueError("At least one value must be updated")
-        return self
+    _validate = model_validator(mode="after")(validate_any_field)
 
 
 # ============================================================================
@@ -62,6 +65,7 @@ class ExerciseResponse(ExerciseBase):
 
 class ExerciseUpdate(BaseModel):
     name: str = Field(description="The name of the exercise to update")
+    _validate = model_validator(mode="after")(validate_any_field)
 
 
 # ============================================================================
@@ -94,11 +98,8 @@ class WorkoutUpdate(BaseModel):
         None, description="Date and time of the workout to update"
     )
 
-    @model_validator(mode="after")
-    def validate_at_least_one_field(self):
-        if self.name is None and self.date is None:
-            raise ValueError("At least one value must be updated")
-        return self
+    _validate = model_validator(mode="after")(validate_any_field)
+
 
 
 # ============================================================================
@@ -124,6 +125,7 @@ class ExerciseTemplateResponse(ExerciseTemplateBase):
 
 class ExerciseTemplateUpdate(BaseModel):
     name: str = Field(description="Name of the exercise template to update")
+    _validate = model_validator(mode="after")(validate_any_field)
 
 
 # ============================================================================
@@ -150,3 +152,4 @@ class WorkoutTemplateResponse(WorkoutTemplateBase):
 
 class WorkoutTemplateUpdate(BaseModel):
     name: str = Field(description="Name of the workout template to update")
+    _validate = model_validator(mode="after")(validate_any_field)
