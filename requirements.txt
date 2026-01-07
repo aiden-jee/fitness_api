@@ -1,3 +1,4 @@
+-i https://pkgs.safetycli.com/repository/me-66aa8/project/fitness_api/pypi/simple/
 fastapi>=0.109.1
 uvicorn[standard]==0.24.0
 sqlalchemy==2.0.23

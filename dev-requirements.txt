@@ -1,3 +1,4 @@
+-i https://pkgs.safetycli.com/repository/me-66aa8/project/fitness_api/pypi/simple/
 pytest==9.0.2
 black>=24.0,<25
 bandit>=1.7,<2
