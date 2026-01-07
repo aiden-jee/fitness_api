@@ -45,7 +45,7 @@ jobs:
       run: bandit -r . -ll -x tests/
 
     - name: Run dependency check
-      run: safety check -r requirements.txt
+      run: safety scan -r requirements.txt
 
     # -----------------------------------------------------
     # Create Docker Image (Runs on all Branches)
