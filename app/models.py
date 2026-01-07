@@ -1,7 +1,17 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, DateTime
 from sqlalchemy.orm import relationship
 from app.database import Base
+from datetime import datetime, timezone
 
+class User(Base):
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False, index=True)
+    default_measurement(String, nullable=True)
+    timezone = Column(String, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+    
 class WorkoutTemplate(Base):
     __tablename__ = "workout_templates"
     
