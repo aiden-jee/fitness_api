@@ -55,11 +55,21 @@ jobs:
     - name: Setup Docker Builder
       uses: docker/setup-buildx-action@v3
 
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=sha
+
     - name: Build the Docker image
       uses: docker/build-push-action@v6
       with:
         push: false
-        tags: ${{ env.IMAGE_NAME }}:${{ github.head_ref || github.ref_name }}
+        tags: ${{ steps.meta.outputs.tag }}
+        labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
     
