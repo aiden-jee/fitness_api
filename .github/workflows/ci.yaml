@@ -78,10 +78,12 @@ jobs:
     # Run Docker Image in Container (RUNS PYTEST UNIT TESTS)
     # -----------------------------------------------------
     - name: Run Pytest within the Docker Container
+      env:
+        ALL_TAGS: ${{ steps.meta.outputs.tags }}
       run: |
-        IMAGE_TAG="${{ env.IMAGE_NAME }}:${{ github.head_ref || github.ref_name }}"
+        TEST_TAG=$(echo "$ALL_TAGS" | head -n 1)
 
-        docker run --rm -t $IMAGE_TAG \
+        docker run --rm -t $TEST_TAG \
           pytest tests/unit \
           --cov=./app \
           --cov-report=xml:coverage.xml \
