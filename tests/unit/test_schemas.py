@@ -31,7 +31,7 @@ VALID_UPDATE_MODEL_TO_FIELD = {
 }
 
 
-@pytest.mark.parametrize("models", UPDATE_MODEL)
+@pytest.mark.parametrize("model", UPDATE_MODEL)
 def test_update_error_no_field(model):
     empty_field = {}
     with pytest.raises(ValueError) as excinfo:
