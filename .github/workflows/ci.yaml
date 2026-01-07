@@ -44,15 +44,6 @@ jobs:
     - name: Run Bandit (SAST)
       run: bandit -r . -ll -x tests/
 
-    - name: Visibility Check
-      run: |
-        if [ -z "${{ secrets.SAFETY_API }}" ]; then
-          echo "ERROR: GitHub cannot see the secret 'SAFETY_API'. Check your Settings."
-          exit 1
-        else
-          echo "SUCCESS: The secret is loaded and available."
-        fi
-
     - name: Run Safety CLI to check for vulnerabilities
       uses: pyupio/safety-action@v1
       with:
