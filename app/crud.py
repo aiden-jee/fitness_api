@@ -1,7 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import and_
 from app import models, schemas
-from datetime import date
 
 
 # Workout Template CRUD

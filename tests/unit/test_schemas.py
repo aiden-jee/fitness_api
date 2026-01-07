@@ -1,6 +1,13 @@
 import pytest
 
-from app.schemas import *
+from app.schemas import (
+    WorkoutUpdate,
+    SetUpdate,
+    ExerciseUpdate,
+    # UserUpdate,
+    WorkoutTemplateUpdate,
+    ExerciseTemplateUpdate,
+)
 
 # -------------------------------------------------------------------
 # CONSTANTS (Change as needed)
@@ -9,7 +16,7 @@ UPDATE_MODEL = [
     WorkoutUpdate,
     SetUpdate,
     ExerciseUpdate,
-    UserUpdate,
+    # UserUpdate,
     WorkoutTemplateUpdate,
     ExerciseTemplateUpdate,
 ]
@@ -18,7 +25,7 @@ VALID_UPDATE_MODEL_TO_FIELD = {
     WorkoutUpdate: {"name": "Test Run"},
     SetUpdate: {"weight": 100.5},
     ExerciseUpdate: {"name": "Bench Press"},
-    UserUpdate: {"name": "New Name"},
+    # UserUpdate: {"name": "New Name"},
     WorkoutTemplateUpdate: {"name": "New template"},
     ExerciseTemplateUpdate: {"name": "New template"},
 }
