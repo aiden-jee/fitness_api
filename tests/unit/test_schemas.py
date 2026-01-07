@@ -1,5 +1,6 @@
 import pytest
 
+from datetime import datetime
 from pydantic import ValidationError
 from app.schemas import (
     WorkoutCreate,
