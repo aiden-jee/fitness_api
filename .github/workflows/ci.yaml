@@ -45,9 +45,9 @@ jobs:
       run: bandit -r . -ll -x tests/
 
     - name: Run Safety CLI to check for vulnerabilities
-      uses: pyupio/safety-action@v1
-        with:
-          api-key: ${{ secrets.SAFETY_API }}
+      uses: pyupio/safety-action@v3
+      with:
+        api-key: ${{ secrets.SAFETY_API }}
 
     # -----------------------------------------------------
     # Create Docker Image (Runs on all Branches)
