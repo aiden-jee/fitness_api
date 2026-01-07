@@ -39,7 +39,7 @@ def test_update_error_no_field(model):
     empty_field = {}
     with pytest.raises(ValueError) as excinfo:
         model(**empty_field)
-    assert "At least one field must be updated" in str(excinfo.value)
+    assert "At least one field must be updated" in str(excinfo.value), "Incorrect error / no error message"
 
 
 @pytest.mark.parametrize(

@@ -66,7 +66,6 @@ class ExerciseResponse(ExerciseBase):
 
 class ExerciseUpdate(BaseModel):
     name: str = Field(description="The name of the exercise to update")
-    _validate = model_validator(mode="after")(validate_any_field)
 
 
 # ============================================================================
@@ -125,7 +124,6 @@ class ExerciseTemplateResponse(ExerciseTemplateBase):
 
 class ExerciseTemplateUpdate(BaseModel):
     name: str = Field(description="Name of the exercise template to update")
-    _validate = model_validator(mode="after")(validate_any_field)
 
 
 # ============================================================================
@@ -152,4 +150,3 @@ class WorkoutTemplateResponse(WorkoutTemplateBase):
 
 class WorkoutTemplateUpdate(BaseModel):
     name: str = Field(description="Name of the workout template to update")
-    _validate = model_validator(mode="after")(validate_any_field)
