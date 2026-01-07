@@ -74,6 +74,7 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        provenance: false
     
     # -----------------------------------------------------
     # Run Docker Image in Container (RUNS PYTEST UNIT TESTS)
