@@ -87,7 +87,7 @@ jobs:
         TEST_TAG=$(echo "$ALL_TAGS" | head -n 1)
 
         docker run --rm -t $TEST_TAG \
-          pytest tests/unit \
+          python -m pytest tests/unit \
           --cov=./app \
           --cov-report=xml:coverage.xml \
           --junitxml=pytest-report.xml
