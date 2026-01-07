@@ -45,7 +45,7 @@ jobs:
       run: bandit -r . -ll -x tests/
 
     - name: Run Safety CLI to check for vulnerabilities
-      uses: pyupio/safety-action@v3
+      uses: pyupio/safety-action@v1
       with:
         api-key: ${{ secrets.SAFETY_API }}
 
