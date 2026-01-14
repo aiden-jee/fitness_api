@@ -1,0 +1,7 @@
+# Handle line endings automatically for files detected as text
+# and move all to LF on check-in to the repo
+* text=auto eol=lf
+
+# Explicitly declare Python files to always use LF
+*.py text eol=lf
+*.txt text eol=lf
