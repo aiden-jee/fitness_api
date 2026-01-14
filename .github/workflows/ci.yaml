@@ -28,7 +28,7 @@ jobs:
       with:
         python-version: '3.12'
         cache: 'pip'
-    
+
     - name: Set up dependencies
       run: pip install -r dev-requirements.txt
 
@@ -76,7 +76,7 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
         provenance: false
-    
+
     # -----------------------------------------------------
     # Run Docker Image in Container (RUNS PYTEST UNIT TESTS)
     # -----------------------------------------------------
@@ -91,7 +91,3 @@ jobs:
           --cov=./app \
           --cov-report=xml:coverage.xml \
           --junitxml=pytest-report.xml
-          
-
-
-      

@@ -4,7 +4,7 @@
 
     # Install Dependencies
     COPY requirements.txt .
-    COPY dev-requirements.txt . 
+    COPY dev-requirements.txt .
     RUN pip install --no-cache-dir -r dev-requirements.txt
     RUN pip install --no-cache-dir -r requirements.txt
 

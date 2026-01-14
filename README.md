@@ -64,5 +64,3 @@ curl -X POST "http://localhost:8000/exercises/1/sets/" \
 The API uses SQLite by default (stored in `fitness.db`). The database is automatically created when you first run the application.
 
 To use a different database (e.g., PostgreSQL), update the `SQLALCHEMY_DATABASE_URL` in `app/database.py`.
-
-
