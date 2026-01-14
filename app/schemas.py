@@ -8,6 +8,7 @@ from typing import List, Optional, Literal
 
 USERNAME_MAX = 24
 
+
 # TODO: Export to a seperate models folder when refactoring
 def validate_any_field(self):
     """Reusable logic for Pydantic model_validators"""
@@ -17,34 +18,54 @@ def validate_any_field(self):
 
 
 # ============================================================================
-# User Schemas 
+# User Schemas
 # ============================================================================
 class UserBase(BaseModel):
-    name: str = Field(description="Name of the user", alias="username", max_length=USERNAME_MAX)
-    default_measurement: Optional[Literal["lbs", "kgs"]] = Field("lbs", description="The default measurement unit for the user")
-    timezone: Optional[str] = Field(None, description="IANA timezone name, e.g America/Los_Angeles")
-    
+    name: str = Field(
+        description="Name of the user", alias="username", max_length=USERNAME_MAX
+    )
+    default_measurement: Optional[Literal["lbs", "kgs"]] = Field(
+        "lbs", description="The default measurement unit for the user"
+    )
+    timezone: Optional[str] = Field(
+        None, description="IANA timezone name, e.g America/Los_Angeles"
+    )
+
+
 class UserCreate(UserBase):
-    pass    
-    
+    pass
+
+
 class UserResponse(UserBase):
     id: int = Field(gt=0, description="The ID of the user being returned")
-    created_at: datetime = Field(description="Date and time in UTC the user was created")  
-    
+    created_at: datetime = Field(
+        description="Date and time in UTC the user was created"
+    )
+
     class Config:
         from_attributes = True
-  
+
+
 class UserUpdate(BaseModel):
     name: Optional[str] = Field(None, description="The name of the user to update")
-    default_measurement: Optional[Literal["lbs", "kg"]] = Field(None, description="The default measurement unit of the user to update to")
-    timezone: Optional[str] = Field(None, description="The timezone of the user to update")
-    
+    default_measurement: Optional[Literal["lbs", "kg"]] = Field(
+        None, description="The default measurement unit of the user to update to"
+    )
+    timezone: Optional[str] = Field(
+        None, description="The timezone of the user to update"
+    )
+
     @model_validator(mode="after")
     def validate_at_least_one_field(self):
-        if self.name is None and self.default_measurement is None and self.timezone is None:
+        if (
+            self.name is None
+            and self.default_measurement is None
+            and self.timezone is None
+        ):
             raise ValueError("At least one value must be updated")
         return self
-    
+
+
 # ============================================================================
 # Set Schemas (Sets in Exercises - Has Reps and Weight)
 # ============================================================================
@@ -55,6 +76,7 @@ class SetBase(BaseModel):
 
 class SetCreate(SetBase):
     pass
+
 
 class SetResponse(SetBase):
     id: int = Field(description="The ID of the set being returned")
