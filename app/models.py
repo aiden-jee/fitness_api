@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, DateTime
 from sqlalchemy.orm import relationship
 from app.database import Base
+from datetime import datetime, timezone
 
 
 class WorkoutTemplate(Base):
